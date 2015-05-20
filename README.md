@@ -97,7 +97,10 @@ Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
 6. Once the app is ran you notice data is being populated into dashDB
 
 To produce data analytics and visulization using the R feature available in dashDB or from using the ibmdbR package from dashDB, you need to do the following
-1. Donwload the R script from the Git,
+1. Donwload the R script from the Git, load it into the R-studio, 
+2. To run r-studio outside of dashDB, you will need to use odbcdriverconnect() settings created first. 
+3. Install the required packages in R, ie. ggplot2, ibmdbR, and ggmap using install.packages() command
+4.Run the R script from R-studio.
 
 
 
