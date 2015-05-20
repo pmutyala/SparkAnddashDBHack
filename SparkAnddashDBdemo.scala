@@ -62,9 +62,9 @@ object SparkAnddashDBdemo {
 
     /* this part runs a create table ddl based on the printSchema Defintion */
     val jdbcClassName="com.ibm.db2.jcc.DB2Driver"
-    val url="jdbc:db2://<hostip>:50001/BLUDB:sslConnection=true;"
-    val user="pmutyala"
-    val password="pass4now"
+    val url="jdbc:db2://<hostip>:50001/BLUDB:sslConnection=true;" // enter the hostip fromc connection settings
+    val user="UID" // put the username from connection settings
+    val password="PWD" // put the password from connection settings
     Class.forName(jdbcClassName)
     val connection = DriverManager.getConnection(url, user, password)
     val stmt = connection.createStatement()
@@ -134,7 +134,7 @@ object SparkAnddashDBdemo {
       
     // this part loads syscat.tables from dashDB and creates a temp table in spark to run sql and then prints table created earlier    
              
-    val jdbcdf = sqlContext.load("jdbc", Map("url" -> "jdbc:db2://<host>:50001/BLUDB:user=<USERID>;password=<PWD>;sslConnection=true;", "dbtable" -> "SYSCAT.TABLES", "driver" -> "com.ibm.db2.jcc.DB2Driver"))
+    val jdbcdf = sqlContext.load("jdbc", Map("url" -> "jdbc:db2://<hostip>:50001/BLUDB:user=<USERID>;password=<PWD>;sslConnection=true;", "dbtable" -> "SYSCAT.TABLES", "driver" -> "com.ibm.db2.jcc.DB2Driver"))
     jdbcdf.registerTempTable("jdbcdf")
     println("User's Schema tables in dashDB: \n") 
     val getNewTab = sqlContext.sql("SELECT TABSCHEMA,TABNAME FROM jdbcdf WHERE TABSCHEMA='PMUTYALA' AND TABNAME LIKE '%COLLISION%'")
