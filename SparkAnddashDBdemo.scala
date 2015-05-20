@@ -30,9 +30,10 @@ import java.io._
 
 object SparkAnddashDBdemo {
   def main(args: Array[String]) {
+    // to supress STDOUT logging messages
     Logger.getLogger("org").setLevel(Level.OFF)
     Logger.getLogger("akka").setLevel(Level.OFF)
-    val conf1 = new SparkConf().setAppName("demoToTom")
+    val conf1 = new SparkConf().setAppName("SparkAnddashDBdemo")
     val sc = new org.apache.spark.SparkContext
     val sqlContext = new org.apache.spark.sql.SQLContext(sc)
 
