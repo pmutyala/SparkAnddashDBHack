@@ -46,4 +46,7 @@ To produce data analytics and visulization using the R feature available in dash
 4.Run the R script from R-studio.
 
 
+Usecase2:
+This is a usecase to show how dashDB can be used as data source and data loaded into dashDB can be used for data analytics using pyspark/pandas/ipython interfaces
+
 
