@@ -45,7 +45,7 @@ spark.executor.extraClassPath=/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sql
 6. Once the app is ran you will notice data is being populated into dashDB
 
 7. To produce data analytics and visulization using the R feature available in dashDB or from using the ibmdbR package from dashDB, you need to do the following
-a. Donwload the R script:Spark2dashDB_R_Demo.R from the Git, load it into the R-studio, 
+a. Donwload the R script:SparkAnddashDB_R_Demo.R from the Git, load it into the R-studio, 
 b. To run r-studio outside of dashDB, you will need to use odbcdriverconnect() settings created first. 
 c. Install the required packages in R, ie. ggplot2, ibmdbR, and ggmap using install.packages() command
 d. Run the R script from R-studio.
