@@ -47,6 +47,8 @@ To produce data analytics and visulization using the R feature available in dash
 
 
 Usecase2:
-This is a usecase to show how dashDB can be used as data source and data loaded into dashDB can be used for data analytics using pyspark/pandas/ipython interfaces
+This is a usecase to show how dashDB can be used as data source and data loaded into Pyspark can be used for data analytics using pyspark/pandas/ipython interfaces
+
+This py script uses pyodbc and unix-obdc to connect to dashDB and then how pandas module can be used to create a data frame from dashDB, Once pandas is able to create a datafram, there are method to convert into spark data frame for analysis.
 
 
