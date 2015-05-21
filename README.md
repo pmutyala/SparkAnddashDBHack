@@ -82,20 +82,19 @@ spark.executor.extraClassPath=/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sql
 --jars "/root/csv/spark-csv_2.11-1.0.3.jar,/root/csv/commons-csv-1.1.jar"
 --class "SparkAnddashDBdemo" /root/spark-1.3.1_IBM_1-bin-2.6.0/target/scala-2.10/spark-dashdb-project_2.10-1.0.jar
 
-Steps that R script performs
-
 10. Once the app is ran you will notice data is being populated into dashDB, You will notice collisions table and data is populated in IBM dashDB
 
-11. To produce data analytics and visulization using the R feature available in dashDB or from using the ibmdbR package from dashDB, you need to do the following
-a. Donwload the R script:SparkAnddashDB_R_Demo.R from the Git, load it into the R-studio,
-b. To run r-studio outside of dashDB, you will need to use odbcdriverconnect() settings created first.
-c. Install the required packages in R, ie. ggplot2, ibmdbR, and ggmap using install.packages() command
-d. Run the R script from R-studio.
+Steps that R script performs:https://github.com/pmutyala/SparkAnddashDBHack/blob/master/SparkAnddashDB_R_Demo.R
 
+1. To produce data analytics and visulization using the R feature available in dashDB or from using the ibmdbR package from dashDB, you need to do the following
+2. Donwload the R script:SparkAnddashDB_R_Demo.R from the Git, load it into the R-studio,
+3. Launch r-studio in dashDB from analytics --> r-studio in IBM dashDB
+4. Install the required packages in R, ie. ggplot2, ggmap using install.packages("<package name>") command
+5. Run the R script from R-studio.
 
-Usecase2:
-This is a usecase to show how dashDB can be used as data source and data loaded into Pyspark can be used for data analytics using pyspark/pandas/ipython interfaces
+Usecase2: This is a usecase to show how IBM dashDB can be used as data source and data loaded into Pyspark can be used for data analytics using pyspark/pandas/ipython interfaces
 
-This py script uses pyodbc and unix-obdc to connect to dashDB and then how pandas module can be used to create a data frame from dashDB, Once pandas is able to create a datafram, there are method to convert into spark data frame for analysis.
-
+1. To run ipython and python you will need to instlall python 2.7, and ipython[all] packages 
+2. To Run ipython and py scripts for loading data from dashDB into pyspark using pandas module you will need to install unix-obdc to connect to dashDB, also other modules like matplotlib, numpy
+3. run SparkAnddashDB_IPython_demo.ipynb from ipython interface, or run the SparkAnddashDB_Pandas_PySpark_IPython_Demo.py from pyspark interface. 
 
