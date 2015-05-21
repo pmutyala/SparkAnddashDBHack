@@ -5,7 +5,7 @@ There are 2 cases i want to demo as part of Apache Spark Integration with IBM da
 
 usecase 1: How dashDB can be used as data store for spark, and how can it become as Enterprise datawarehouse for Apache spark customers in its Ecosystem.
 
-Steps that scala app performs
+Steps that scala app performs:https://github.com/pmutyala/SparkAnddashDBHack/blob/master/SparkAnddashDBdemo.scala
 1. loads CSV from local filesystem into spark using Spark CSV package as data frame - sqlContext.load(). The same load can be applied in loading other formats like JSON,textfile,Parquet and AVRO
 2. Print Schema of loaded file and data frame : df.printSchema()
 3. Generate Create table DDL to create table based on df.printschema()
@@ -81,6 +81,8 @@ spark.executor.extraClassPath=/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sql
 --driver-class-path "/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sqlj/db2jcc.jar:/root/spark-1.3.1_IBM_1-bin-2.6.0/lib/spark-csv_2.11-1.0.3.jar:/root/csv/commons-csv-1.1.jar"
 --jars "/root/csv/spark-csv_2.11-1.0.3.jar,/root/csv/commons-csv-1.1.jar"
 --class "SparkAnddashDBdemo" /root/spark-1.3.1_IBM_1-bin-2.6.0/target/scala-2.10/spark-dashdb-project_2.10-1.0.jar
+
+Steps that R script performs
 
 10. Once the app is ran you will notice data is being populated into dashDB, You will notice collisions table and data is populated in IBM dashDB
 
