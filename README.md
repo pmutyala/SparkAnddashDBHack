@@ -3,9 +3,9 @@ these are demo apps for Spark and dashDB Hackaton
 
 There are 2 cases i want to demo as part of Apache Spark Integration with IBM dashDB.
 
-usecase 1: How dashDB can be used as data store for spark, and how can become as Enterprise datawarehouse for spark customers
+usecase 1: How dashDB can be used as data store for spark, and how can it become as Enterprise datawarehouse for Apache spark customers in its Ecosystem.
 
-Steps that app performs
+Steps that scala app performs
 1. loads CSV from local filesystem into spark using Spark CSV package as data frame - sqlContext.load(). The same load can be applied in loading other formats like JSON,textfile,Parquet and AVRO
 2. Print Schema of loaded file and data frame : df.printSchema()
 3. Generate Create table DDL to create table based on df.printschema()
@@ -53,7 +53,7 @@ fi                                                                              
 # added to support dependencies                                                                     /
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-3. Create a simple.sbt build file to package the app
+7. Create a simple.sbt build file to package the app
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,16 +72,9 @@ javacOptions ++= Seq("-source", "1.7")                                          
                                                                                                     /
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-4. Place the app under src/main/scala under the spark install directory and then do "sbt package" to package the jar
+8. Place the app under $SPARK_HOME/src/main/scala under the spark install directory and then do "sbt package" to package the jar from $SPARK_HOME location
 
-5. then run spark-submit command to run the classes like
-
-/root/spark-1.3.1_IBM_1-bin-2.6.0/bin/spark-submit --conf "spark.driver.extraClassPath=/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sqlj/db2jcc.jar:/root/csv/spark-csv_2.11-1.0.3.jar:/root/csv/commons-csv-1.1.jar,
-spark.executor.extraClassPath=/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sqlj/db2jcc.jar:/root/spark-1.3.1_IBM_1-bin-2.6.0/lib/spark-csv_2.11-1.0.3.jar:/root/csv/commons-csv-1.1.jar"
---driver-class-path "/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sqlj/db2jcc.jar:/root/spark-1.3.1_IBM_1-bin-2.6.0/lib/spark-csv_2.11-1.0.3.jar:/root/csv/commons-csv-1.1.jar"
---jars "/root/csv/spark-csv_2.11-1.0.3.jar,/root/csv/commons-csv-1.1.jar"
---class "SparkAnddashDBdemo" /root/spark-1.3.1_IBM_1-bin-2.6.0/target/scala-2.10/spark-dashdb-project_2.10-1.0.jar
-5. then run spark-submit command to run the classes like
+9. Then run spark-submit command to run the classes like
 
 /root/spark-1.3.1_IBM_1-bin-2.6.0/bin/spark-submit --conf "spark.driver.extraClassPath=/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sqlj/db2jcc.jar:/root/csv/spark-csv_2.11-1.0.3.jar:/root/csv/commons-csv-1.1.jar,
 spark.executor.extraClassPath=/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sqlj/db2jcc.jar:/root/spark-1.3.1_IBM_1-bin-2.6.0/lib/spark-csv_2.11-1.0.3.jar:/root/csv/commons-csv-1.1.jar"
@@ -89,9 +82,9 @@ spark.executor.extraClassPath=/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sql
 --jars "/root/csv/spark-csv_2.11-1.0.3.jar,/root/csv/commons-csv-1.1.jar"
 --class "SparkAnddashDBdemo" /root/spark-1.3.1_IBM_1-bin-2.6.0/target/scala-2.10/spark-dashdb-project_2.10-1.0.jar
 
-6. Once the app is ran you will notice data is being populated into dashDB
+10. Once the app is ran you will notice data is being populated into dashDB, You will notice collisions table and data is populated in IBM dashDB
 
-7. To produce data analytics and visulization using the R feature available in dashDB or from using the ibmdbR package from dashDB, you need to do the following
+11. To produce data analytics and visulization using the R feature available in dashDB or from using the ibmdbR package from dashDB, you need to do the following
 a. Donwload the R script:SparkAnddashDB_R_Demo.R from the Git, load it into the R-studio,
 b. To run r-studio outside of dashDB, you will need to use odbcdriverconnect() settings created first.
 c. Install the required packages in R, ie. ggplot2, ibmdbR, and ggmap using install.packages() command
