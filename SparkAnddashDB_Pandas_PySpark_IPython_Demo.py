@@ -13,6 +13,7 @@ import matplotlib as mlib
 import matplotlib.pyplot as plt
 <<<<<<< HEAD
 from pyspark import SparkContext
+from pyspark import *
 cnx = dashdb.connect("DRIVER={IBM DB2 ODBC DRIVER};DSN=BLUDB;UID=<USERID>;PWD=<PASSWORD>") # username and password from connection settings
 =======
 cnx = dashdb.connect("DRIVER={IBM DB2 ODBC DRIVER};DSN=BLUDB;UID=<USERNAME>;PWD=<PASSWORD>") # username and password from connection settings
