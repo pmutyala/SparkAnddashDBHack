@@ -99,3 +99,24 @@ Usecase2: This is a usecase to show how IBM dashDB can be used as data source an
 3. run SparkAnddashDB_IPython_demo.ipynb from ipython interface, or run the SparkAnddashDB_Pandas_PySpark_IPython_Demo.py from pyspark interface.  
 4. To run an ipython notebook, you need to launch ipython using ipython notebook and then imprt your notebook and run them interactively.
 
+Inorder to run the pyspark for ipython you will need to the following
+1. ipython profile create pyspark
+2. edit ~/.ipython/profile_pyspark/ipython_notebook_config.py to update c.NotebookApp.port = <port for listener>
+3. under ~/.bashrc or ~/.profile add
+export SPARK_HOME="/root/spark-1.3.1_IBM_1-bin-2.6.0/"
+export PYSPARK_SUBMIT_ARGS="--master local[2]"
+4.touch ~/.ipython/profile_pyspark/startup/00-pyspark-setup.py
+# Configure the necessary Spark environment
+import os
+import sys
+
+spark_home = os.environ.get('SPARK_HOME', None)
+sys.path.insert(0, spark_home + "/python")
+
+# Add the py4j to the path.
+# You may need to change the version number to match your install
+sys.path.insert(0, os.path.join(spark_home, 'python/lib/py4j-0.8.2.1-src.zip'))
+
+# Initialize PySpark to predefine the SparkContext variable 'sc'
+execfile(os.path.join(spark_home, 'python/pyspark/shell.py'))
+5. ipython notebook --profile=pyspark
