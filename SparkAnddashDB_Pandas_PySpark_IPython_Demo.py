@@ -11,8 +11,12 @@ import pandas as pd
 import numpy as np
 import matplotlib as mlib
 import matplotlib.pyplot as plt
+<<<<<<< HEAD
 from pyspark import sqlContext
 cnx = dashdb.connect("DRIVER={IBM DB2 ODBC DRIVER};DSN=BLUDB;UID=<USERID>;PWD=<PASSWORD>") # username and password from connection settings
+=======
+cnx = dashdb.connect("DRIVER={IBM DB2 ODBC DRIVER};DSN=BLUDB;UID=<USERNAME>;PWD=<PASSWORD>") # username and password from connection settings
+>>>>>>> origin/master
 cur = cnx.cursor()
 sql1 = "select BOROUGH,sum(NUMBER_OF_PERSONS_INJURED) as persons_injured, sum(NUMBER_OF_CYCLIST_INJURED) as cyclists_injured,sum(NUMBER_OF_PEDESTRIANS_INJURED) as pedestrians_injured,sum(NUMBER_OF_MOTORIST_INJURED) as motorist_injured from collisions where BOROUGH <> \'\' group by BOROUGH"
 df1 = pd.read_sql(sql1, cnx)
