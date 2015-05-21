@@ -21,7 +21,11 @@ sql2 = "select BOROUGH,sum(NUMBER_OF_PERSONS_KILLED) as persons_killed, sum(NUMB
 df2 = pd.read_sql(sql2, cnx)
 df3 = pd.merge(df1,df2)
 # from spark, loading json for incoming data
+<<<<<<< HEAD
 df_spark =  sqlContext.jsonFile("/root/samples/collisions/collisions.json")
+=======
+df_spark =  sqlContext.jsonFile("/home/pmutyala/collisions/collisions.json")
+>>>>>>> origin/master
 df_spark.registerAsTable("df_spark")
 df_spark_sql1 = sqlContext.sql("select BOROUGH,sum(cast(NUMBER_OF_PERSONS_KILLED as INT)) as PERSONS_KILLED, sum(cast(NUMBER_OF_CYCLIST_KILLED as INT)) as CYCLISTS_KILLED,sum(cast(NUMBER_OF_PEDESTRIANS_KILLED as INT)) as PEDESTRIANS_KILLED,sum(cast(NUMBER_OF_MOTORIST_KILLED as INT)) as MOTORIST_KILLED from df_spark where BOROUGH <> \'\' group by BOROUGH")
 print(df_spark_sql1.show())
