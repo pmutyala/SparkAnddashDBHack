@@ -120,3 +120,27 @@ sys.path.insert(0, os.path.join(spark_home, 'python/lib/py4j-0.8.2.1-src.zip'))
 # Initialize PySpark to predefine the SparkContext variable 'sc'
 execfile(os.path.join(spark_home, 'python/pyspark/shell.py'))
 5. ipython notebook --profile=pyspark
+
+Configuring pyodbc and unix-odbc environment
+1. Install the ibm_data_server_driver_package_linuxx64_v10.5.tar.gz and source db2profile
+2. Once unix-odbc is installed edit the 
+a.  cat odbcinst.ini
+[IBM DB2 ODBC DRIVER]
+Description         = dashDB and DB2 as Source
+Driver              = /root/dsdriver/lib/libdb2o.so.1
+b. cat odbc.ini
+[dashDB/DB2]
+Description         = dashDB and DB2 as Source
+Driver              = IBM DB2 ODBC DRIVER
+Trace               = off
+TraceFile           = stderr
+DSN                 = BLUDB
+Database            = BLUDB
+Servername          = <HOST IP>
+UserName            = <USER ID>
+Password            = <PASSWORD>
+Port                = 50000
+Protocol            = TCPIP
+
+3. db2cli writecfg add -database BLUDB -host x.x.x.x -port 50000
+4. db2cli writecfg add -dsn BLUDB -database BLUDB -host x.x.x.x -port 50000
