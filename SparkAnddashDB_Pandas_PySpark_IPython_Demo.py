@@ -1,8 +1,31 @@
+# -*- coding: utf-8 -*-
+# <nbformat>3.0</nbformat>
+
+# <codecell>
+
+#written by pmutyala@ca.ibm.com
+#data used is from https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions/h9gi-nx95?
+% pylab inline
 import pyodbc as dashdb
 import pandas as pd
-import numpy
+import numpy as np
 import matplotlib as mlib
-cnx = dashdb.connect("DRIVER={IBM DB2 ODBC DRIVER};DSN=BLUDB;UID=<USERNAME>;PWD=<PASSWORD>") # username and password from connection settings
+import matplotlib.pyplot as plt
+from pyspark import sqlContext
+cnx = dashdb.connect("DRIVER={IBM DB2 ODBC DRIVER};DSN=BLUDB;UID=<USERID>;PWD=<PASSWORD>") # username and password from connection settings
 cur = cnx.cursor()
-sql = "select * from collisions"
-df = pd.read_sql(sql, cnx)
+sql1 = "select BOROUGH,sum(NUMBER_OF_PERSONS_INJURED) as persons_injured, sum(NUMBER_OF_CYCLIST_INJURED) as cyclists_injured,sum(NUMBER_OF_PEDESTRIANS_INJURED) as pedestrians_injured,sum(NUMBER_OF_MOTORIST_INJURED) as motorist_injured from collisions where BOROUGH <> \'\' group by BOROUGH"
+df1 = pd.read_sql(sql1, cnx)
+sql2 = "select BOROUGH,sum(NUMBER_OF_PERSONS_KILLED) as persons_killed, sum(NUMBER_OF_CYCLIST_KILLED) as cyclists_killed,sum(NUMBER_OF_PEDESTRIANS_KILLED) as pedestrians_KILLED,sum(NUMBER_OF_MOTORIST_KILLED) as motorist_killed from collisions where BOROUGH <> \'\' group by BOROUGH"
+df2 = pd.read_sql(sql2, cnx)
+df3 = pd.merge(df1,df2)
+plt.figure()
+stack_plot = df3.plot(kind='bar',stacked=True,title="Number of Persons Injured or Killed in a Borough",label=df3.BOROUGH)
+stack_plot.legend(bbox_to_anchor=(1.6, 0.85))
+stack_plot.set_xlabel(df3.BOROUGH)
+stack_plot.set_ylabel("Number of Persons effected in collisions")
+plt.show()
+
+# <codecell>
+
+
