@@ -96,5 +96,5 @@ Usecase2: This is a usecase to show how IBM dashDB can be used as data source an
 
 1. To run ipython and python you will need to instlall python 2.7, and ipython[all] packages 
 2. To Run ipython and py scripts for loading data from dashDB into pyspark using pandas module you will need to install unix-obdc to connect to dashDB, also other modules like matplotlib, numpy
-3. run SparkAnddashDB_IPython_demo.ipynb from ipython interface, or run the SparkAnddashDB_Pandas_PySpark_IPython_Demo.py from pyspark interface. 
+3. run SparkAnddashDB_IPython_demo.ipynb from ipython interface, or run the SparkAnddashDB_Pandas_PySpark_IPython_Demo.py from pyspark interface.  
 
