@@ -95,6 +95,7 @@ Steps that R script performs:https://github.com/pmutyala/SparkAnddashDBHack/blob
 Usecase2: This is a usecase to show how IBM dashDB can be used as data source and data loaded into Pyspark can be used for data analytics using pyspark/pandas/ipython interfaces
 
 1. To run ipython and python you will need to instlall python 2.7, and ipython[all] packages 
-2. To Run ipython and py scripts for loading data from dashDB into pyspark using pandas module you will need to install unix-obdc to connect to dashDB, also other modules like matplotlib, numpy
+2. To Run ipython and py scripts for loading data from dashDB into pyspark using pandas module you will need to install unix-odbc,pyodbc to connect to dashDB, also other modules like matplotlib, numpy are required as well.
 3. run SparkAnddashDB_IPython_demo.ipynb from ipython interface, or run the SparkAnddashDB_Pandas_PySpark_IPython_Demo.py from pyspark interface.  
+4. To run an ipython notebook, you need to launch ipython using ipython notebook and then imprt your notebook and run them interactively.
 
