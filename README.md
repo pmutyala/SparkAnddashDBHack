@@ -127,9 +127,9 @@ Configuring pyodbc and unix-odbc environment
 a.  cat odbcinst.ini
 [IBM DB2 ODBC DRIVER]
 Description         = dashDB and DB2 as Source
-Driver              = /root/dsdriver/lib/libdb2o.so.1
+Driver              = /root/dsdriver/lib/libdb2.so.1
 b. cat odbc.ini
-[dashDB/DB2]
+[BLUDB]
 Description         = dashDB and DB2 as Source
 Driver              = IBM DB2 ODBC DRIVER
 Trace               = off
@@ -144,3 +144,4 @@ Protocol            = TCPIP
 
 3. db2cli writecfg add -database BLUDB -host x.x.x.x -port 50000
 4. db2cli writecfg add -dsn BLUDB -database BLUDB -host x.x.x.x -port 50000
+5. verify the DSN by running odbcinst -s -q and drivers by running odbcinst -d -q
