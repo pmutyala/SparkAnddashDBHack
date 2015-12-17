@@ -1,11 +1,13 @@
 # SparkAnddashDBHack
 these are demo apps for Spark and dashDB Hackaton
 
-There are 2 cases i want to demo as part of Apache Spark Integration with IBM dashDB.
+There are 2 cases I want to demo as part of Apache Spark Integration with IBM dashDB.
 
-usecase 1: How dashDB can be used as data store for spark, and how can it become as Enterprise datawarehouse for Apache spark customers in its Ecosystem.
+## Use case 1: 
+How dashDB can be used as data store for spark, and how can it become as Enterprise datawarehouse for Apache spark customers in its Ecosystem.
 
 Steps that scala app performs:https://github.com/pmutyala/SparkAnddashDBHack/blob/master/SparkAnddashDBdemo.scala
+
 1. loads CSV from local filesystem into spark using Spark CSV package as data frame - sqlContext.load(). The same load can be applied in loading other formats like JSON,textfile,Parquet and AVRO
 2. Print Schema of loaded file and data frame : df.printSchema()
 3. Generate Create table DDL to create table based on df.printschema()
@@ -14,67 +16,72 @@ Steps that scala app performs:https://github.com/pmutyala/SparkAnddashDBHack/blo
 6. Print the final count of the data inserted into the table on dashDB side : sqlContext.load from db side and print count
 
 
-To run the app to insert data from Apache Spark to dashDB you will need to the following
-1. download spark-csv and apache commons jars files from  http://spark-packages.org/ and https://commons.apache.org/proper/commons-csv/
-2. download the required DB2 JCC drivers from http://www-01.ibm.com/support/docview.wss?uid=swg21363866
+To run the app to insert data from Apache Spark to dashDB you will need to the following:
+
+1. download spark-csv and apache commons jars files from [http://spark-packages.org/](http://spark-packages.org/) and [https://commons.apache.org/proper/commons-csv/](https://commons.apache.org/proper/commons-csv/)
+2. download the required DB2 JCC drivers from [http://www-01.ibm.com/support/docview.wss?uid=swg21363866](http://www-01.ibm.com/support/docview.wss?uid=swg21363866)
 3. Sign up for a IBM dashDB account on bluemix and get the connect information and edit jdbc connection information
-4. Drop the required jars under  $SPARK_HOME/lib directory
+4. Drop the required jars under $SPARK_HOME/lib directory
 5. edit the spark  configuration files $SPARK_HOME/conf/spark-defaults.conf and add
 spark.driver.extraClassPath       /root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sqlj/db2jcc.jar:/root/csv/spark-csv_2.11-1.0.3.jar:/root/csv/commons-csv-1.1.jar
 spark.executor.extraClassPath     /root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sqlj/db2jcc.jar:/root/csv/spark-csv_2.11-1.0.3.jar:/root/csv/commons-csv-1.1.jar
-6. edit the spark classpath configuration files: compute-classpath.sh
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-Added by pmutyala                                                                                   /
-if [ -f "$FWDIR/RELEASE" ]; then                                                                    /
-  db2_jar_dir="$FWDIR"/lib                                                                          /
-else                                                                                                /
-  db2_jar_dir="$FWDIR"/lib_managed/jars                                                             /
-fi                                                                                                  /
-                                                                                                    /
-db2_jars="$(find "$db2_jar_dir" 2>/dev/null | grep "db2jcc4*\\.jar$")"                              /
-db2_jars="$(echo "$db2_jars" | tr "\n" : | sed s/:$//g)"                                            /
-                                                                                                    /
-if [ -n "$db2_jars" ]; then                                                                         /
-  appendToClasspath "$db2_jars"                                                                     /
-fi                                                                                                  /
-                                                                                                    /
-if [ -f "$FWDIR/RELEASE" ]; then                                                                    /
-  csv_jar_dir="$FWDIR"/lib                                                                          /
-else                                                                                                /
-  csv_jar_dir="$FWDIR"/lib_managed/jars                                                             /
-fi                                                                                                  /
-                                                                                                    /
-csv_jars="$(find "$csv_jar_dir" 2>/dev/null | grep "spark-csv_2.11-1.0.3*\\.jar$")"                 /
-csv_jars="$(echo "$csv_jars" | tr "\n" : | sed s/:$//g)"                                            /
-                                                                                                    /
-if [ -n "$csv_jars" ]; then                                                                         /
-  appendToClasspath "$csv_jars"                                                                     /
-fi                                                                                                  /
-# added to support dependencies                                                                     /
-////////////////////////////////////////////////////////////////////////////////////////////////////
+6. edit the spark classpath configuration files: `compute-classpath.sh`
+ 
+    ```bash
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    Added by pmutyala                                                                                   /
+    if [ -f "$FWDIR/RELEASE" ]; then                                                                    /
+      db2_jar_dir="$FWDIR"/lib                                                                          /
+    else                                                                                                /
+      db2_jar_dir="$FWDIR"/lib_managed/jars                                                             /
+    fi                                                                                                  /
+                                                                                                        /
+    db2_jars="$(find "$db2_jar_dir" 2>/dev/null | grep "db2jcc4*\\.jar$")"                              /
+    db2_jars="$(echo "$db2_jars" | tr "\n" : | sed s/:$//g)"                                            /
+                                                                                                        /
+    if [ -n "$db2_jars" ]; then                                                                         /
+      appendToClasspath "$db2_jars"                                                                     /
+    fi                                                                                                  /
+                                                                                                        /
+    if [ -f "$FWDIR/RELEASE" ]; then                                                                    /
+      csv_jar_dir="$FWDIR"/lib                                                                          /
+    else                                                                                                /
+      csv_jar_dir="$FWDIR"/lib_managed/jars                                                             /
+    fi                                                                                                  /
+                                                                                                        /
+    csv_jars="$(find "$csv_jar_dir" 2>/dev/null | grep "spark-csv_2.11-1.0.3*\\.jar$")"                 /
+    csv_jars="$(echo "$csv_jars" | tr "\n" : | sed s/:$//g)"                                            /
+                                                                                                        /
+    if [ -n "$csv_jars" ]; then                                                                         /
+      appendToClasspath "$csv_jars"                                                                     /
+    fi                                                                                                  /
+    # added to support dependencies                                                                     /
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ```
 
 7. Create a simple.sbt build file to package the app
 
+    ```sbt
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    name := "Spark dashDB Project"                                                                      /
+                                                                                                        /
+    version := "1.0"                                                                                    /
+                                                                                                        /
+    scalaVersion := "2.10.4"                                                                            /
+                                                                                                        /
+    libraryDependencies ++= Seq(                                                                        /
+                              "org.apache.spark" %% "spark-core" % "1.3.1",                             /
+                              "com.databricks" % "spark-csv_2.11" % "1.0.3",                            /
+                              "org.apache.commons" % "commons-csv" % "1.1",                             /
+                              )                                                                         /
+    javacOptions ++= Seq("-source", "1.7")                                                              /
+                                                                                                        /
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    ```
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-name := "Spark dashDB Project"                                                                      /
-                                                                                                    /
-version := "1.0"                                                                                    /
-                                                                                                    /
-scalaVersion := "2.10.4"                                                                            /
-                                                                                                    /
-libraryDependencies ++= Seq(                                                                        /
-                          "org.apache.spark" %% "spark-core" % "1.3.1",                             /
-                          "com.databricks" % "spark-csv_2.11" % "1.0.3",                            /
-                          "org.apache.commons" % "commons-csv" % "1.1",                             /
-                          )                                                                         /
-javacOptions ++= Seq("-source", "1.7")                                                              /
-                                                                                                    /
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+8. Place the app under `$SPARK_HOME/src/main/scala` under the spark install directory and then do `sbt package` to package the jar from `$SPARK_HOME` location
 
-8. Place the app under $SPARK_HOME/src/main/scala under the spark install directory and then do "sbt package" to package the jar from $SPARK_HOME location
-
-9. Then run spark-submit command to run the classes like
+9. Then run `spark-submit` command to run the classes like
 
 /root/spark-1.3.1_IBM_1-bin-2.6.0/bin/spark-submit --conf "spark.driver.extraClassPath=/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sqlj/db2jcc.jar:/root/csv/spark-csv_2.11-1.0.3.jar:/root/csv/commons-csv-1.1.jar,
 spark.executor.extraClassPath=/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sqlj/db2jcc.jar:/root/spark-1.3.1_IBM_1-bin-2.6.0/lib/spark-csv_2.11-1.0.3.jar:/root/csv/commons-csv-1.1.jar"
@@ -82,7 +89,7 @@ spark.executor.extraClassPath=/root/jcc/jdbc_sqlj/db2jcc4.jar:/root/jcc/jdbc_sql
 --jars "/root/csv/spark-csv_2.11-1.0.3.jar,/root/csv/commons-csv-1.1.jar"
 --class "SparkAnddashDBdemo" /root/spark-1.3.1_IBM_1-bin-2.6.0/target/scala-2.10/spark-dashdb-project_2.10-1.0.jar
 
-10. Once the app is ran you will notice data is being populated into dashDB, You will notice collisions table and data is populated in IBM dashDB
+10. Once the app is run you will notice data is being populated into dashDB, You will notice collisions table and data is populated in IBM dashDB
 
 Steps that R script performs:https://github.com/pmutyala/SparkAnddashDBHack/blob/master/SparkAnddashDB_R_Demo.R
 
@@ -92,39 +99,50 @@ Steps that R script performs:https://github.com/pmutyala/SparkAnddashDBHack/blob
 4. Install the required packages in R, ie. ggplot2, ggmap using install.packages("<package name>") command
 5. Run the R script from R-studio.
 
-Usecase2: This is a usecase to show how IBM dashDB can be used as data source and data loaded into Pyspark can be used for data analytics using pyspark/pandas/ipython interfaces, this is part how hydrid data analytics from realtime data and historical data can be used for analytics
+## Use case 2
+This is a use case to show how IBM dashDB can be used as data source and data loaded into Pyspark can be used for data analytics using pyspark/pandas/ipython interfaces, this is part how hybrid data analytics from realtime data and historical data can be used for analytics
 
 1. To run ipython and python you will need to instlall python 2.7, and ipython[all] packages 
 2. To Run ipython and py scripts for loading data from dashDB into pyspark using pandas module you will need to install unix-odbc,pyodbc to connect to dashDB, also other modules like matplotlib, numpy are required as well.
 3. run SparkAnddashDB_IPython_demo.ipynb from ipython interface, or run the SparkAnddashDB_Pandas_PySpark_IPython_Demo.py from pyspark interface.  
 4. To run an ipython notebook, you need to launch ipython using ipython notebook and then imprt your notebook and run them interactively.
 
-Inorder to run the pyspark for ipython you will need to the following
+Inorder to run the pyspark for ipython you will need to the following:
+
 1. ipython profile create pyspark
 2. edit ~/.ipython/profile_pyspark/ipython_notebook_config.py to update c.NotebookApp.port = <port for listener>
-3. under ~/.bashrc or ~/.profile add
-export SPARK_HOME="/root/spark-1.3.1_IBM_1-bin-2.6.0/"
-export PYSPARK_SUBMIT_ARGS="--master local[2]"
-4.touch ~/.ipython/profile_pyspark/startup/00-pyspark-setup.py
-# Configure the necessary Spark environment
-import os
-import sys
+3. under ~/.bashrc or ~/.profile add:
 
-spark_home = os.environ.get('SPARK_HOME', None)
-sys.path.insert(0, spark_home + "/python")
+    ```   
+    export SPARK_HOME="/root/spark-1.3.1_IBM_1-bin-2.6.0/"
+    export PYSPARK_SUBMIT_ARGS="--master local[2]"
+    ```
+4. `touch ~/.ipython/profile_pyspark/startup/00-pyspark-setup.py`
 
-# Add the py4j to the path.
-# You may need to change the version number to match your install
-sys.path.insert(0, os.path.join(spark_home, 'python/lib/py4j-0.8.2.1-src.zip'))
+5. Configure the necessary Spark environment
 
-# Initialize PySpark to predefine the SparkContext variable 'sc'
+    ```
+    import os
+    import sys
+    spark_home = os.environ.get('SPARK_HOME', None)
+    sys.path.insert(0, spark_home + "/python")
+    ```
+6. Add the py4j to the path. (You may need to change the version number to match your install)
+
+    ```
+    sys.path.insert(0, os.path.join(spark_home, 'python/lib/py4j-0.8.2.1-src.zip'))
+    ```
+7. Initialize PySpark to predefine the SparkContext variable 'sc'
 execfile(os.path.join(spark_home, 'python/pyspark/shell.py'))
 5. ipython notebook --profile=pyspark
 
-Configuring pyodbc and unix-odbc environment
+**Configuring pyodbc and unix-odbc environment**
+
 1. Install the ibm_data_server_driver_package_linuxx64_v10.5.tar.gz and source db2profile
 2. Once unix-odbc is installed edit the 
 a.  cat odbcinst.ini
+
+```
 [IBM DB2 ODBC DRIVER]
 Description         = dashDB and DB2 as Source
 Driver              = /root/dsdriver/lib/libdb2.so.1
@@ -141,6 +159,7 @@ UserName            = <USER ID>
 Password            = <PASSWORD>
 Port                = 50000
 Protocol            = TCPIP
+```
 
 3. db2cli writecfg add -database BLUDB -host x.x.x.x -port 50000
 4. db2cli writecfg add -dsn BLUDB -database BLUDB -host x.x.x.x -port 50000
